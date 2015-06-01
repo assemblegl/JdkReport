@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>            
+	
+		<resultMap id="ResultGameInfo" class="gl.object.GameInfo"  >  
+    		<result property="servername" column="servername" />  
+    		<result property="ip" column="ip"/>
+    		<result property="port" column="port"/> 
+    		<result property="gameserverid" column="GameserverID"/> 
+    		<result property="dbname" column="dbname"/>
+    		<result property="gameid" column="GameID"/> 
+    		<result property="gametype" column="GameType"/>
+    		<result property="version" column="version"/>   
+		</resultMap>
+	
+		<select id="queryslavelist" resultMap="ResultGameInfo" > 
+			select * from gamelist_slave
+		</select>
+	    	    
+	                                      
+</sqlMap> 

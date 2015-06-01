@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">				
+    
+    <bean id="check" class="gl.main.Check" init-method="init">	                     
+        <property name="centermysql" >  
+            <ref bean="centermysql" />  
+        </property> 
+        <property name="mysql" >  
+            <ref bean="mysql" />  
+        </property>
+        <property name="mail" >  
+            <ref bean="mail" />  
+        </property>                              			
+    </bean>       
+    
+    <bean id="mysql" class="gl.database.Mysql" >
+        <property name="reconnNum" value="5" />
+        <property name="conntimeout" value="100" />
+        <property name="sleeptime" value="1000" />        
+        <property name="ConnLanCode" value="utf-8" /> 
+        <property name="SetNameLanCode" value="latin1" />
+        <property name="SBehindMasterLevel" value="1000" /> 
+        <property name="slavecheckuser" value="web_slave" />
+        <property name="slavecheckuserpwd" value="MtSlavePass1" />                   
+    </bean>
+    
+    <bean id="mail" class="gl.mail.Mail">  
+        <property name="SMTPHost" value="mail.joyogame.com" />  
+        <property name="MailLang" value="gbk" />
+        <property name="SendUserMail" value="leiguo@joyogame.com" />
+        <property name="SendUserName" value="leiguo" />
+        <property name="SendUserPass" value="Guolei5tgb8ik," />
+        <property name="toMail">
+  			<list>
+   				<value>shuju@joyogame.com</value> 				
+  			</list>
+  		</property>    
+                        
+    </bean>
+    
+    <bean id="centermysql" class="gl.ibatis.CenterMysql">  
+        <property name="sqlMapClient">  
+            <ref bean="sqlMapClient" />  
+        </property>             
+    </bean> 
+    
+    <!-- ibatis mysql-->
+	<bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource">  
+        <property name="driverClassName" value="com.mysql.jdbc.Driver">  
+        </property>
+        <property name="url" value="jdbc:mysql://59.151.111.57:3306/userdb">  
+        </property>  
+        <property name="username" value="sqoop"></property>  
+        <property name="password" value="123456"></property>
+        <property name="initialSize" value="5" />  
+        <property name="maxActive" value="10" />  
+    </bean>  
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">  
+        <property name="dataSource">  
+            <ref bean="datasource" />  
+        </property>  
+        <property name="configLocation" value="conf/sqlmapconf.xml" />   
+    </bean>
+	
+</beans>
