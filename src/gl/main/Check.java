@@ -1,5 +1,7 @@
 package gl.main;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import gl.database.Mysql;
@@ -13,13 +15,26 @@ public class Check extends MyObject{
 	private Mysql mysql;
 	private CenterMysql centermysql;
 	private Mail mail;
+	private int localconf;
+	private List<GameInfo> localgslist;
+	private int reporttime;
+	private SimpleDateFormat hdate = new SimpleDateFormat("HH");
 	
 	public void init(){
 		super.init(this.getClass());
 	}
 	
 	public void run(){
-		List<GameInfo> gslist = centermysql.querySlavelist();
+		
+		List<GameInfo> gslist = null;
+		
+		//read from local
+		if(localconf == 1){
+			gslist = localgslist;
+		}else{
+			gslist = centermysql.querySlavelist();
+		}
+		
 		
 		if(null == gslist) {
 			printError("Check,gslist is null");
@@ -42,6 +57,9 @@ public class Check extends MyObject{
 				printError("email:"+emailstr);
 				printError("服务器id:"+ginfo.getGameserverid()+",slave_io:"+Context.Slave_IO_Running+",slave_sql:"+Context.Slave_SQL_Running+",Seconds_Behind_Master:"+Context.Seconds_Behind_Master+",ip:"+ginfo.getIp()+",port:"+ginfo.getPort()+",gid:"+ginfo.getGameid());
 			}else{
+				
+				
+				
 				printError("slave check ok,slave ip:"+ginfo.getIp()+",port:"+ginfo.getPort()+",gsid:"+ginfo.getGameserverid()+",gid:"+ginfo.getGameid());				
 			}
 			
@@ -49,11 +67,18 @@ public class Check extends MyObject{
 		
 		if(emailstr.equals("")){
 			printError("slave all ok");
+			
+			int now = Integer.valueOf(hdate.format(new Date()));
+			
+			System.out.println("now:"+now);
+			if(now == reporttime){
+				mail.htmlmail("en slave 报告","英文slave服务器同步正常");
+			}
 		}else{
 			mail.htmlmail("slave 报告",emailstr);
 		}
 		
-		//printError("email:"+emailstr);
+		printError("email:"+emailstr);
 		
 	}	
 	
@@ -80,6 +105,31 @@ public class Check extends MyObject{
 	public void setMail(Mail mail) {
 		this.mail = mail;
 	}
-	
 
+	public int getLocalconf() {
+		return localconf;
+	}
+
+	public void setLocalconf(int localconf) {
+		this.localconf = localconf;
+	}
+
+	public List<GameInfo> getLocalgslist() {
+		return localgslist;
+	}
+
+	public void setLocalgslist(List<GameInfo> localgslist) {
+		this.localgslist = localgslist;
+	}
+
+	public int getReporttime() {
+		return reporttime;
+	}
+
+	public void setReporttime(int reporttime) {
+		this.reporttime = reporttime;
+	}
+	
+	
+	
 }

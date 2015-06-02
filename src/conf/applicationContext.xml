@@ -5,7 +5,8 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">				
     
-    <bean id="check" class="gl.main.Check" init-method="init">	                     
+    <bean id="check" class="gl.main.Check" init-method="init">
+    	<property name="reporttime" value="3" /><!-- send ok email in this time -->                     
         <property name="centermysql" >  
             <ref bean="centermysql" />  
         </property> 
@@ -14,12 +15,46 @@
         </property>
         <property name="mail" >  
             <ref bean="mail" />  
-        </property>                              			
+        </property>
+        <property name="localconf" value="1" /><!--read local conf -->
+        <property name="localgslist"  >
+        	<list>
+        		<bean class="gl.object.GameInfo">
+        			<property name="ip" value="127.0.0.1" />
+        			<property name="port" value="36001" />
+        			<property name="gameserverid" value="6001" />
+        			<property name="dbname" value="mtdb_apple" />
+        			<property name="gameid" value="50" />
+        		</bean>
+        		<bean class="gl.object.GameInfo">
+        			<property name="ip" value="127.0.0.1" />
+        			<property name="port" value="36002" />
+        			<property name="gameserverid" value="6002" />
+        			<property name="dbname" value="mtdb_apple" />
+        			<property name="gameid" value="50" />
+        		</bean>
+        		<bean class="gl.object.GameInfo">
+        			<property name="ip" value="127.0.0.1" />
+        			<property name="port" value="36201" />
+        			<property name="gameserverid" value="6201" />
+        			<property name="dbname" value="mtdb_android" />
+        			<property name="gameid" value="50" />
+        		</bean>
+        		<bean class="gl.object.GameInfo">
+        			<property name="ip" value="127.0.0.1" />
+        			<property name="port" value="36301" />
+        			<property name="gameserverid" value="6301" />
+        			<property name="dbname" value="mtdb_wp" />
+        			<property name="gameid" value="50" />
+        		</bean>
+        	</list>  
+              
+        </property>                                     			
     </bean>       
     
     <bean id="mysql" class="gl.database.Mysql" >
         <property name="reconnNum" value="5" />
-        <property name="conntimeout" value="100" />
+        <property name="conntimeout" value="30" />
         <property name="sleeptime" value="1000" />        
         <property name="ConnLanCode" value="utf-8" /> 
         <property name="SetNameLanCode" value="latin1" />
