@@ -19,6 +19,8 @@ public class Check extends MyObject{
 	private List<GameInfo> localgslist;
 	private int reporttime;
 	private SimpleDateFormat hdate = new SimpleDateFormat("HH");
+	private String title;
+	private String contentOk;
 	
 	public void init(){
 		super.init(this.getClass());
@@ -68,17 +70,13 @@ public class Check extends MyObject{
 		if(emailstr.equals("")){
 			printError("slave all ok");
 			
-			int now = Integer.valueOf(hdate.format(new Date()));
-			
-			System.out.println("now:"+now);
+			int now = Integer.valueOf(hdate.format(new Date()));			
 			if(now == reporttime){
-				mail.htmlmail("en slave 报告","英文slave服务器同步正常");
+				mail.htmlmail(title,contentOk);
 			}
 		}else{
-			mail.htmlmail("slave 报告",emailstr);
+			mail.htmlmail(title,emailstr);
 		}
-		
-		printError("email:"+emailstr);
 		
 	}	
 	
@@ -128,6 +126,22 @@ public class Check extends MyObject{
 
 	public void setReporttime(int reporttime) {
 		this.reporttime = reporttime;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContentOk() {
+		return contentOk;
+	}
+
+	public void setContentOk(String contentOk) {
+		this.contentOk = contentOk;
 	}
 	
 	

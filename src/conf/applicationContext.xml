@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">				
     
     <bean id="check" class="gl.main.Check" init-method="init">
-    	<property name="reporttime" value="3" /><!-- send ok email in this time -->                     
+    	<property name="reporttime" value="10" /><!-- send ok email in this time -->                     
         <property name="centermysql" >  
             <ref bean="centermysql" />  
         </property> 
@@ -16,40 +16,20 @@
         <property name="mail" >  
             <ref bean="mail" />  
         </property>
-        <property name="localconf" value="1" /><!--read local conf -->
+        <property name="localconf" value="0" /><!--read local conf -->
         <property name="localgslist"  >
         	<list>
         		<bean class="gl.object.GameInfo">
         			<property name="ip" value="127.0.0.1" />
-        			<property name="port" value="36001" />
-        			<property name="gameserverid" value="6001" />
-        			<property name="dbname" value="mtdb_apple" />
-        			<property name="gameid" value="50" />
-        		</bean>
-        		<bean class="gl.object.GameInfo">
-        			<property name="ip" value="127.0.0.1" />
-        			<property name="port" value="36002" />
-        			<property name="gameserverid" value="6002" />
-        			<property name="dbname" value="mtdb_apple" />
-        			<property name="gameid" value="50" />
-        		</bean>
-        		<bean class="gl.object.GameInfo">
-        			<property name="ip" value="127.0.0.1" />
-        			<property name="port" value="36201" />
-        			<property name="gameserverid" value="6201" />
-        			<property name="dbname" value="mtdb_android" />
-        			<property name="gameid" value="50" />
-        		</bean>
-        		<bean class="gl.object.GameInfo">
-        			<property name="ip" value="127.0.0.1" />
-        			<property name="port" value="36301" />
-        			<property name="gameserverid" value="6301" />
-        			<property name="dbname" value="mtdb_wp" />
-        			<property name="gameid" value="50" />
-        		</bean>
-        	</list>  
-              
-        </property>                                     			
+        			<property name="port" value="23101" />
+        			<property name="gameserverid" value="101" />
+        			<property name="dbname" value="dota_db" />
+        			<property name="gameid" value="137" />
+        		</bean>       		
+        	</list>                
+        </property>  
+        <property name="title" value="mt国内 slave 报告" /><!-- email title -->
+        <property name="contentOk" value="mt国内slave服务器同步正常" /><!-- ok email content -->                                   			
     </bean>       
     
     <bean id="mysql" class="gl.database.Mysql" >
